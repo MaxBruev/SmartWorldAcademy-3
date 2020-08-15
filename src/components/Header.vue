@@ -4,7 +4,7 @@
             <h1>ToDolist</h1>
             <div v-if="this.$store.state.user">
                 {{this.$store.state.user}}
-                <button class="logout">Выйти</button>
+                <button class="logout" @click.prevent="logout">Выйти</button>
             </div>
             <div v-else class="message notLog">
                 Вы не авторизовались
@@ -18,6 +18,12 @@
     export default {
         name: 'Header',
         components: {
+        },
+        methods: {
+            async logout() {
+                await this.$store.dispatch('logout');
+                await this.$router.push('/login')
+            }
         }
     }
 </script>

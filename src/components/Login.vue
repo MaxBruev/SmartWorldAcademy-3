@@ -1,6 +1,6 @@
 <template>
-    <div class="light-blue darken-1 empty-layout" v-on:submit.prevent="onAuth">
-    <form class="card auth-card">
+    <div class="light-blue darken-1 empty-layout">
+    <form class="card auth-card" v-on:submit.prevent="onLog">
         <div class="card-content">
             <span class="card-title">Авторизация</span>
             <div class="input-field">
@@ -26,6 +26,9 @@
                 <small
                         class="helper-text invalid"
                 >Password</small>
+                <div style="color: red"
+                     v-if="this.$store.state.logError"
+                >Вы ввели не верный логин или пароль</div>
 
             </div>
         </div>
@@ -35,7 +38,6 @@
                     Войти
                 </button>
             </div>
-
             <p class="center">
                 Нет аккаунта?
                 <router-link to="/register">Зарегистрироваться</router-link>
@@ -46,24 +48,26 @@
 </template>
 
 <script>
+    import firebase from 'firebase/app';
+    import "firebase/auth";
+
     export default {
         name: 'Login',
         data: () => ({
-            show: true,
             login: '',
             password: ''
         }),
         methods: {
-            onAuth() {
+            onLog() {
                 firebase.auth().signInWithEmailAndPassword(this.login, this.password)
                     .then(() => {
-                        this.authIsCorr();
+                        this.logOk();
                     })
                     .catch(() => {
                         this.$store.commit('authErr');
                     });
             },
-            authIsCorr() {
+            logOk() {
                 this.$store.commit('authCorr');
                 this.$store.commit('actUser');
                 this.$router.push('todo');
