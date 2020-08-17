@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import 'materialize-css/dist/js/materialize.min'
 
-import firebase from 'firebase'
+import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/database'
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="light-blue darken-1 empty-layout">
+    <div class="light-blue empty-layout">
     <form class="card auth-card" v-on:submit.prevent="onLog">
         <div class="card-content">
             <span class="card-title">Авторизация</span>
@@ -12,7 +12,7 @@
                 >
                 <label for="email">Email</label>
                 <small
-                        class="helper-text invalid"
+                        class="helper-text"
                 >Email</small>
             </div>
             <div class="input-field">
@@ -24,7 +24,7 @@
                 >
                 <label for="password">Пароль</label>
                 <small
-                        class="helper-text invalid"
+                        class="helper-text"
                 >Password</small>
                 <div style="color: red"
                      v-if="this.$store.state.logError"
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-    import firebase from 'firebase/app';
+    import * as firebase from 'firebase/app';
     import "firebase/auth";
 
     export default {
@@ -75,3 +75,8 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import "~materialize-css/dist/css/materialize.min.css";
+    @import "../assets/index.css";
+</style>

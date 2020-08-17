@@ -86,11 +86,16 @@
              async logOk() {
                  try{
                  await  this.$store.dispatch('register', data);
-                this.$store.commit('authCorr');
-                this.$store.commit('actUser');
+                // this.$store.commit('authCorr');
+                // this.$store.commit('actUser');
                 await this.$router.push('todo');
                  } catch (e) {}
             }
         }
     }
 </script>
+
+<style lang="scss">
+    @import "~materialize-css/dist/css/materialize.min.css";
+    @import "../assets/index.css";
+</style>

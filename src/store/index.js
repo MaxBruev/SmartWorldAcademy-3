@@ -8,9 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     logError: false,
-    login: false,
-    errMsg: '',
-    user: ''
+    login: false
   },
   mutations: {
     authErr: (state, error) => {
@@ -24,9 +22,40 @@ export default new Vuex.Store({
     },
     actUser: (state) => {
       firebase.auth().onAuthStateChanged((user) => { state.user = user.email })
-    }
+    },
+    getUser: (state) => {
+      if (localStorage.user) {
+        state.user = localStorage.user;
+        state.userID = localStorage.userID;
+      }
+    },
   },
   actions: {
+    async logout() {
+      await firebase.auth().signOut()
+    },
+    getLists: async ({state}) => {
+      let db = firebase.database();
+
+      await db.ref(`/${state.userID}`).once('value')
+          .then((snap) => {
+            let value = snap.val();
+            let result = [];
+            for (let listName in value) {
+              result.push({'listName': listName});
+            }
+            state.lists = result;
+            state.activeList = result[0].listName;
+          })
+          .catch((err) => {
+            console.log(err.message);
+          })
+    },
+    openTodo ({dispatch}) {
+      dispatch('getLists').then(() => {
+        dispatch('getTasks');
+      })
+    }
   },
   modules: {
   }
