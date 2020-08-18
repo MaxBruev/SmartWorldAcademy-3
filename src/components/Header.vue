@@ -1,8 +1,8 @@
 <template>
     <div>
-        <header>
-            <h1>ToDolist</h1>
-            <div v-if="this.$store.state.user">
+        <header class="header_todo">
+            <h1 class="h1-todo">ToDo-list</h1>
+            <div class="Exit_mail" v-if="this.$store.state.user">
                 {{this.$store.state.user}}
                 <button class="logout" @click.prevent="logout">Выйти</button>
             </div>
@@ -29,7 +29,7 @@
 </script>
 
 <style>
-    header {
+    .header_todo {
         height: 78px;
         background-color: #00bcd4;
         display: flex;
@@ -38,10 +38,17 @@
         color: #ffffff;
         border-bottom: 1px solid #535353;
         width: 100%;
+        position: relative;
     }
-    h1 {
+    .h1-todo {
         padding: 7px 30px;
         font-size: 30px;
+        margin: 0;
+    }
+    .Exit_mail {
+        position: absolute;
+        top: 20px;
+        right: 0;
     }
     .logout {
         outline: 0;

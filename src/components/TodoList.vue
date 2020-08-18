@@ -1,51 +1,50 @@
-
 <template>
-    <div class="todo">
+    <div class="Todo">
         <div>
-            <button class="todoList" :data = "data" v-for="(data, index) in list" :key="index">
-                {{data.name}}
-                <button class="close">×</button>
+            <button
+                    class="todoList"
+                    v-for="list in this.$store.state.lists"
+                    v-bind:key="list.listName"
+                    v-bind:class="thisActiveList===list.listName ? 'active' : ''"
+                    v-on:click="openList(list.listName)"
+            >
+                {{list.listName}}
+                <button class="Delete" v-on:click="DeleteList(list.listName)">×</button>
             </button>
         </div>
-        <div class="addCont">
-            <input class="text_addCont" type = "text" placeholder="Добавить список..." v-model="new_list.name"/>
-            <button @click="add_task()">+</button>
+        <div class="AddTask">
+            <input class="AddTaskListText" v-model="newList.name" type = "text" placeholder="Добавить список..." />
+            <button v-on:click="CreateList(newList.name)">+</button>
         </div>
     </div>
 </template>
 
 <script>
-    export default  {
-        props: ['data'],
+    export default {
+        name: 'TodoList',
         data: () => ({
-            list: [
-                {
-                    name:''
-                }
-            ],
-            new_list: [
-                {
-                    name: ''
-                }
-            ]
+            newList: {
+                name: ''
+            },
+            thisActiveList: ''
         }),
-        components: {
-
+        async created() {
+            await this.$store.dispatch('openTodo');
+            this.thisActiveList = this.$store.state.activeList;
         },
-        methods:{
-            task_done() {
-                this.$emit('task_done');
+        methods: {
+            openList(listName) {
+                this.$store.dispatch('AllTasks', listName);
+                this.thisActiveList = listName;
             },
-            delete_task(id) {
-                this.list.splice(id,1);
+            CreateList(newListName) {
+                this.$store.dispatch('CreateList', newListName);
             },
-            add_task() {
-                if(this.new_list.name !== ' ') {
-                    this.list.push({
-                        name: this.new_list.name
-                    });
+            async DeleteList(listName) {
+                if (confirm(`Удалить список ${listName}?`)) {
+                    await this.$store.dispatch('DeleteList', listName);
+                    this.thisActiveList = this.$store.state.activeList;
                 }
-                this.new_list.name = ' ';
             }
         }
     }

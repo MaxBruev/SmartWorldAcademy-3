@@ -13,7 +13,7 @@ Vue.config.productionTip = false;
 firebase.initializeApp(
     {
       apiKey: "AIzaSyD22232lakuBhNe54wYkkdz8EPh8MPCzPw",
-      authDomain: "task3-20be6.firebaseapp.com",
+      authDomain: "task3-20be6.firebase.com",
       databaseURL: "https://task3-20be6.firebaseio.com",
       projectId: "task3-20be6",
       storageBucket: "task3-20be6.appspot.com",

@@ -61,7 +61,7 @@
 }
 
  /*TodoList*/
- .todo {
+ .Todo {
      overflow: auto;
      top: 57px;
      padding: 10px;
@@ -73,6 +73,7 @@
      border-right: 1px solid #535353;
  }
 .todoList {
+    text-align: left;
     position: relative;
     padding: 10px;
     width: 250px;
@@ -83,36 +84,27 @@
 .todoList:hover {
     background-color: #f2f2f2;
 }
-h2 {
-    margin: 5px auto;
-    color: #535353;
-    text-align: center;
-}
-.text_addCont {
+.AddTaskListText {
     min-width:  calc(100% - 50px);
     margin: 0 10px;
     border: none;
     padding: 0;
 }
-.addCont button {
+.AddTask button {
     border: 1px solid #53535331;
     height: 30px;
     width: 30px;
     background-color: #00bcd4;
     color: black;
 }
-.addCont button:hover {
+.AddTask button:hover {
     border: 1px solid #53535331;
     height: 30px;
     width: 30px;
     background-color: limegreen;
     color: black;
 }
-.addCont img {
-    height: 20px;
-    vertical-align: middle;
-}
-.addCont {
+.AddTask {
     background-color: #fff;
     display: flex;
     justify-content: space-between;
@@ -124,18 +116,10 @@ input:focus {
     outline: none;
 }
 
-.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: inherit;
-    border: none;
-    height: 20px;
-    width: 20px;
-}
+
 
 /*TodoItem*/
-.todoListItem {
+.todoTask {
     position: absolute;
     left: 500px;
     bottom: 39px;
@@ -143,8 +127,7 @@ input:focus {
     width: calc(100vw - 541px);
     height: calc(100vh - 138px);
     overflow: auto;
-    border-left: 1px solid #535353;
-    border-bottom: 1px solid #535353;
+    border: 1px solid #535353;
 }
 .todoListItemDone {
     z-index: -1;
@@ -158,7 +141,7 @@ input:focus {
     border-left: 1px solid #535353;
     border-bottom: 1px solid #535353;
 }
-.todoItem {
+.Tasks {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -166,10 +149,13 @@ input:focus {
     padding: 15px;
     border: 1px solid #53535331;
 }
-.addCont {
+.Task_p {
+    display: inline-block;
+}
+.AddTask {
     width: 90%;
 }
-.container__addTask {
+.TodoAddTask {
     width: calc(100vw - 541px);
     max-width: 800px;
     position: absolute;
@@ -179,43 +165,37 @@ input:focus {
     align-items: center;
     justify-content: space-between;
 }
-label {
-    color: #535353;
-}
-.cont {
-    display: flex;
-    align-items: center;
-}
-.cont input+label {
-    display: inline-flex;
-    user-select: none;
-}
-.cont input+label::before {
-    margin-right: 10px;
-    content: '';
-    width: 1em;
-    height: 1em;
-    border: 1px solid #535353;
-    border-radius: 0.25em;
-}
-.cont input:checked+label::before {
-    background-color: #e7ffcd;
-}
+
 .quick {
     margin: 0 10px;
 }
-.data {
+.TodoDelete {
     padding-left: 15px;
     min-width: 120px;
     display: flex;
 }
-.important {
-    margin: 0 10px 0 0;
-    min-width: 1em;
-    min-height: 1em;
-    border: 1px solid #00bcd4;
+.Import {
+    position: absolute;
+    left: 4px;
+    top: 15px;
+    width: 15px;
+    height: 15px;
+    border-radius: 25px;
     background-color: lightcoral;
 }
 .ps_checkbox {
     margin-right: 5px;
+}
+.Delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+}
+.ps_newTask {
+    width: 150px;
+}
+button {
+    outline: none;
 }

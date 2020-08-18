@@ -1,26 +1,26 @@
 <template>
     <div>
-        <div class="todoListItem">
-            <div class="todoItem"  :data = "data" v-for="(data, index) in tasks" @task_done="delete_task(index)">
-                <div class="cont">
-                    <input class="ps_checkbox" type="checkbox" v-model="data.done" />
-                    {{data.name}}
+        <div class="todoTask">
+            <div class="Tasks" v-for="task in this.$store.state.tasks" v-bind:key="task.id">
+                <div>
+                    <input class="quick" type="checkbox" v-bind:id="task.id" v-bind="{checked: task.done}" v-on:click="makeDone(task.taskName)">
+                    <label v-bind:for="task.id"></label>
+                    <div class="Import" v-if="task.important"></div>
+                    <div class="Task_p" v-bind:class="{done: task.done}">{{task.taskName}}</div>
                 </div>
-                <div class="data" >
-                    {{new Date().getDate()+'.'+ (new Date().getMonth()+1)+'.'+ new Date().getFullYear()+' '+new Date().getHours()+':'+new Date().getMinutes()}}
-                    <button class="close" v-if="data.done" @click="task_done()">X</button>
+                <div class="TodoDelete">
+                    {{task.dataCreated}}
+                    <button class="Delete" v-on:click="DeleteTask(task.taskName) ">×</button>
                 </div>
             </div>
         </div>
-        <div class="container__addTask">
-            <div class="addCont">
-                <label>
-                    <input class="text_addCont" type="text" placeholder="Добавить задачу..." v-model="new_task.name" />
-                </label>
-                <button @click="add_task()">+</button>
+        <div class="TodoAddTask">
+            <div class="AddTask">
+                <input class="AddTaskListText" v-model="newTask.name" type="text" placeholder="Добавить задачу..." />
+                <button v-on:click="CreateTask(newTask.name, newTask.important)">+</button>
             </div>
-            <div>
-                <input class="ps_checkbox" type="checkbox" id="quick" />
+            <div class="ps_newTask">
+                <input class="quick" v-model="newTask.important" type="checkbox" id="quick">
                 <label for="quick">Срочное</label>
             </div>
         </div>
@@ -28,39 +28,35 @@
 </template>
 
 <script>
- export default  {
-     props: ['data'],
-     data: () => ({
-         tasks: [
-             {
-                 name:'123'
-             }
-         ],
-         new_task: [
-             {
-                 name: ''
-             }
-         ]
-     }),
-     methods:{
-         add_task() {
-             if(this.new_task.name !== ' ') {
-                 this.tasks.push({
-                     name: this.new_task.name
-                 });
-             }
-             this.new_task.name = ' ';
-         },
-         task_done() {
-             this.$emit('delete_task');
-         },
-         delete_task(id){
-             this.tasks.slice(id, 1);
-         }
-     }
- }
+    export default {
+        name: 'TodoItem',
+        data: () => ({
+            newTask: {
+                name: '',
+                important: ''
+            }
+        }),
+        methods: {
+            CreateTask(newTaskName, important) {
+                let CreateDataTime = new Date().getDate()+'.'+ (new Date().getMonth()+1)+'.'+ new Date().getFullYear()+' '+new Date().getHours()+':'+new Date().getMinutes();
+                let payload = {
+                    newTaskName,
+                    important,
+                    CreateDataTime
+                };
+                this.$store.dispatch('CreateTask', payload);
+            },
+            makeDone(taskDoneName) {
+                this.$store.dispatch('makeDone', taskDoneName);
+            },
+            DeleteTask(taskName) {
+                if (confirm(`Удалить задачу ${taskName}?`)) {
+                    this.$store.dispatch('DeleteTask', taskName);
+                }
+            },
+        }
+    }
 </script>
-
 <style lang="scss">
     @import "../assets/index.css";
 </style>

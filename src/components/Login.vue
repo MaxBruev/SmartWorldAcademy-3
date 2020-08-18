@@ -64,11 +64,11 @@
                         this.logOk();
                     })
                     .catch(() => {
-                        this.$store.commit('authErr');
+                        this.$store.commit('Error');
                     });
             },
             logOk() {
-                this.$store.commit('authCorr');
+                this.$store.commit('Auth');
                 this.$store.commit('actUser');
                 this.$router.push('todo');
             }
