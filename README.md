@@ -3,6 +3,8 @@
 ## Project setup
 ```
 npm install
+npm i firebase
+npm install materialize-css@next
 ```
 
 ### Compiles and hot-reloads for development
