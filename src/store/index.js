@@ -48,7 +48,6 @@ const store = new Vuex.Store({
             state.errMsg = error;
         }
     },
-
     actions: {
         getLists: async ({state}) => {
             let DataBase = firebase.database();
@@ -67,7 +66,6 @@ const store = new Vuex.Store({
                     console.log(err.message);
                 })
         },
-
         CreateList: ({state, dispatch}, newListName) => {
             let DataBase = firebase.database();
 
@@ -80,7 +78,6 @@ const store = new Vuex.Store({
                 }
             })
         },
-
         DeleteList: async ({state, dispatch}, listName) => {
             let DataBase = firebase.database();
 
@@ -92,39 +89,7 @@ const store = new Vuex.Store({
                 }
             })
         },
-
-        AllTasks: async ({state, commit}, newListName) => {
-            let DataBase = firebase.database();
-            state.maxID = '';
-
-            if (newListName) {
-                commit('newActiveList', newListName)
-            }
-
-            await DataBase.ref(`/${state.userID}/${state.activeList}`).on('value', async (snap) => {
-                let value = snap.val();
-                let result = [];
-                for (let taskName in value) {
-                    let task = {};
-                    task.taskName = taskName;
-
-                    await DataBase.ref(`/${state.userID}/${state.activeList}/${taskName}`).once('value')
-                        .then((snap) => {
-                            let value = snap.val();
-                            for (let attr in value) {
-                                task[`${attr}`] = value[attr];
-                                if (attr === 'id' && value[attr] > state.maxID) {
-                                    state.maxID = value[attr];
-                                }
-                            }
-                        });
-                    result.push(task);
-                }
-                state.tasks = result;
-            })
-        },
-
-        CreateTask: ({state}, {CreateDataTime, important, newTaskName}) => {
+         CreateTask: ({state}, {CreateDataTime, important, newTaskName}) => {
             let {maxID, activeList, userID} = state;
             let DataBase = firebase.database();
 
@@ -149,7 +114,35 @@ const store = new Vuex.Store({
                 }
             })
         },
+        AllTasks: async ({state, commit}, newListName) => {
+            let DataBase = firebase.database();
+            state.maxID = '';
 
+            if (newListName) {
+                commit('newActiveList', newListName)
+            }
+            await DataBase.ref(`/${state.userID}/${state.activeList}`).on('value', async (snap) => {
+                let value = snap.val();
+                let result = [];
+                for (let taskName in value) {
+                    let task = {};
+                    task.taskName = taskName;
+
+                    await DataBase.ref(`/${state.userID}/${state.activeList}/${taskName}`).once('value')
+                        .then((snap) => {
+                            let value = snap.val();
+                            for (let attr in value) {
+                                task[`${attr}`] = value[attr];
+                                if (attr === 'id' && value[attr] > state.maxID) {
+                                    state.maxID = value[attr];
+                                }
+                            }
+                        });
+                    result.push(task);
+                }
+                state.tasks = result;
+            })
+        },
         makeDone: ({state}, taskDoneName) => {
             const {tasks, activeList, userID} = state;
             let DataBase = firebase.database();
@@ -162,14 +155,12 @@ const store = new Vuex.Store({
                 if (err) console.log(err.message);
              });
         },
-
         DeleteTask: async ({state}, taskName) => {
             let DataBase = firebase.database();
 
             await DataBase.ref(`/${state.userID}/${state.activeList}/` + taskName).set(null, (err) =>
             { if (err) console.log(err.message); });
         },
-
         openTodo: async ({dispatch}) => {
             await dispatch('getLists').then(() => {
                 dispatch('AllTasks');
