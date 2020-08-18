@@ -16,9 +16,14 @@ export default new Vuex.Store({
       state.errMsg = error;
     },
     authCorr: (state, user) => {
-      state.logError = false;
+      state.logHasError = false;
       state.login = true;
-      state.user = user;
+      firebase.auth().onAuthStateChanged((user) => {
+        state.user = user.email;
+        state.userID = user.uid;
+        localStorage.user = state.user;
+        localStorage.userID = state.userID;
+      })
     },
     actUser: (state) => {
       firebase.auth().onAuthStateChanged((user) => { state.user = user.email })
@@ -46,6 +51,32 @@ export default new Vuex.Store({
             }
             state.lists = result;
             state.activeList = result[0].listName;
+          })
+          .catch((err) => {
+            console.log(err.message);
+          })
+    },
+    getTasks: async ({state}) => {
+      let db = firebase.database();
+
+      await db.ref(`/${state.userID}/${state.activeList}`).once('value')
+          .then(async (snap) => {
+            let value = snap.val();
+            let result = [];
+            for (let taskName in value) {
+              let task = {};
+              task.taskName = taskName;
+
+              await db.ref(`/${state.userID}/${state.activeList}/${taskName}`).once('value')
+                  .then((snap) => {
+                    let value = snap.val();
+                    for (let attr in value) {
+                      task[`${attr}`] = true;
+                    }
+                  });
+              result.push(task);
+            }
+            state.tasks = result;
           })
           .catch((err) => {
             console.log(err.message);
