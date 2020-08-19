@@ -76,12 +76,9 @@
                      });
              },
              async logOk() {
-                 try{
-                     await  this.$store.dispatch('register', data);
-                     this.$store.commit('authCorr');
-                     this.$store.commit('actUser');
-                     await this.$router.push('todo');
-                 } catch (e) {}
+                 this.$store.commit('Auth');
+                 this.$store.commit('actUser');
+                 await this.$router.push('todo');
             }
         }
     }
