@@ -33,19 +33,17 @@
                     <label for="name">Имя</label>
                     <small class="helper-text invalid">Name</small>
                 </div>
-                <p>
-                    <label>
-                        <input type="checkbox" />
-                        <span>С правилами согласен</span>
-                    </label>
-                </p>
+                <label>
+                    <input type="checkbox" v-bind:class="{error: this.$store.state.logError}"/>
+                    <span>С правилами согласен</span>
+                </label>
+                <div style="color: red" v-if="this.$store.state.logError">Вы ввели не верные данные</div>
             </div>
             <div class="card-action">
                 <div>
                     <button class="btn waves-effect waves-light auth-submit" type="submit" style="background-color: #00bcd4">Зарегистрироваться
                     </button>
                 </div>
-
                 <p class="center">
                     Уже есть аккаунт?
                     <router-link to="/login">Войти!</router-link>
@@ -68,27 +66,21 @@
             password: ''
         }),
          methods: {
-             async onReg({dispatch}, {email, password, name}) {
-                 try {
-                     await firebase.auth().createUserWithEmailAndPassword(email, password);
-                     const uid = await dispatch('getUid');
-                     await firebase.database().ref('/user/${uid}/info').set({
-                         name
+             onReg() {
+                 firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+                     .then(() => {
+                         this.logOk();
                      })
-                 } catch(e) {
-                     throw e
-                 }
-             },
-             getUid() {
-                 const userId = firebase.auth().currentUser;
-                 return userId ? userId.uid : null
+                     .catch((err) => {
+                         this.$store.commit('authErr', err);
+                     });
              },
              async logOk() {
                  try{
-                 await  this.$store.dispatch('register', data);
-                // this.$store.commit('authCorr');
-                // this.$store.commit('actUser');
-                await this.$router.push('todo');
+                     await  this.$store.dispatch('register', data);
+                     this.$store.commit('authCorr');
+                     this.$store.commit('actUser');
+                     await this.$router.push('todo');
                  } catch (e) {}
             }
         }

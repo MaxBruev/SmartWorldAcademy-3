@@ -12,13 +12,13 @@ Vue.config.productionTip = false;
 
 firebase.initializeApp(
     {
-      apiKey: "AIzaSyD22232lakuBhNe54wYkkdz8EPh8MPCzPw",
-      authDomain: "task3-20be6.firebase.com",
-      databaseURL: "https://task3-20be6.firebaseio.com",
-      projectId: "task3-20be6",
-      storageBucket: "task3-20be6.appspot.com",
-      messagingSenderId: "693219538784",
-      appId: "1:693219538784:web:05704da2a572711f945005"
+        apiKey: "AIzaSyD22232lakuBhNe54wYkkdz8EPh8MPCzPw",
+        authDomain: "task3-20be6.firebaseapp.com",
+        databaseURL: "https://task3-20be6.firebaseio.com",
+        projectId: "task3-20be6",
+        storageBucket: "task3-20be6.appspot.com",
+        messagingSenderId: "693219538784",
+        appId: "1:693219538784:web:51b6dac0c4a7efb4945005"
     });
 
 let app;

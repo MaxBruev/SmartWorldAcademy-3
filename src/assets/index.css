@@ -51,14 +51,56 @@
     max-width: 600px;
     margin: 0 auto
 }
-
 .purple.darken-1 {
     background-color: #8e24aa !important
 }
-
 .purple-text.text-darken-1 {
     color: #8e24aa !important
 }
+
+
+/*Header*/
+.header_todo {
+    height: 78px;
+    background-color: #00bcd4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    border-bottom: 1px solid #535353;
+    width: 100%;
+    position: relative;
+}
+.h1-todo {
+    padding: 7px 30px;
+    font-size: 30px;
+    margin: 0;
+}
+.Exit_mail {
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+.logout {
+    outline: 0;
+    background-color: #4CAF50;
+    border: none;
+    padding: 5px 15px;
+    color: #fff;
+    margin: 0 15px;
+}
+.notLog {
+    color: #ffffff;
+    margin: 0 15px;
+    font-size: 16px;
+}
+.notLog a {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
 
  /*TodoList*/
  .Todo {
@@ -69,8 +111,8 @@
      flex-direction: column;
      justify-content: space-between;
      max-width: 24%;
-     height: calc(100vh - 90px);
-     border-right: 1px solid #535353;
+     height: calc(100vh - 102px);
+     border: 1px solid #535353;
  }
 .todoList {
     text-align: left;

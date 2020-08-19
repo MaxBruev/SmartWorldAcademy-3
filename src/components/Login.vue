@@ -26,11 +26,10 @@
                 <small
                         class="helper-text"
                 >Password</small>
-                <div style="color: red"
-                     v-if="this.$store.state.logError"
-                >Вы ввели не верный логин или пароль</div>
-
             </div>
+            <div style="color: red"
+                 v-if="this.$store.state.logError"
+            >Вы ввели не верный логин или пароль</div>
         </div>
         <div class="card-action">
             <div>

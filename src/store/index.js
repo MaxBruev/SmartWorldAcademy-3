@@ -35,11 +35,6 @@ const store = new Vuex.Store({
                 state.userID = localStorage.userID;
             }
         },
-        logOut: (state) => {
-            localStorage.clear();
-            state.user = '';
-            state.userID = '';
-        },
         newActiveList: (state, newListName) => {
             state.activeList = newListName;
         },
@@ -66,10 +61,10 @@ const store = new Vuex.Store({
                     console.log(err.message);
                 })
         },
-        CreateList: ({state, dispatch}, newListName) => {
+        CreateList: async ({state, dispatch}, newListName) => {
             let DataBase = firebase.database();
 
-            DataBase.ref(`/${state.userID}/` + newListName).set({}[`${newListName}`] = '', (err) =>
+            await DataBase.ref(`/${state.userID}/` + newListName).set({}[`${newListName}`] = '', (err) =>
             {
                 if (!err) {
                     dispatch('openTodo');
@@ -89,7 +84,7 @@ const store = new Vuex.Store({
                 }
             })
         },
-         CreateTask: ({state}, {CreateDataTime, important, newTaskName}) => {
+         CreateTask: async ({state}, {CreateDataTime, important, newTaskName}) => {
             let {maxID, activeList, userID} = state;
             let DataBase = firebase.database();
 
@@ -143,7 +138,7 @@ const store = new Vuex.Store({
                 state.tasks = result;
             })
         },
-        makeDone: ({state}, taskDoneName) => {
+        makeDone: async ({state}, taskDoneName) => {
             const {tasks, activeList, userID} = state;
             let DataBase = firebase.database();
 

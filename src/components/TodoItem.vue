@@ -3,14 +3,14 @@
         <div class="todoTask">
             <div class="Tasks" v-for="task in this.$store.state.tasks" v-bind:key="task.id">
                 <div>
-                    <input class="quick" type="checkbox" v-bind:id="task.id" v-bind="{checked: task.done}" v-on:click="makeDone(task.taskName)">
+                    <input class="quick" type="checkbox" v-bind:id="task.id" v-bind="{checked: task.done}" v-on:click="makeDone(task.taskName)" />
                     <label v-bind:for="task.id"></label>
                     <div class="Import" v-if="task.important"></div>
                     <div class="Task_p" v-bind:class="{done: task.done}">{{task.taskName}}</div>
                 </div>
                 <div class="TodoDelete">
                     {{task.dataCreated}}
-                    <button class="Delete" v-on:click="DeleteTask(task.taskName) ">×</button>
+                    <button class="Delete" v-on:click="DeleteTask(task.taskName)">×</button>
                 </div>
             </div>
         </div>
